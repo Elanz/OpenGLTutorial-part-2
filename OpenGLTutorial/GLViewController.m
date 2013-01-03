@@ -11,6 +11,15 @@
 #import "Vertex.h"
 #import "ESDrawable.h"
 
+const Vertex QuadVertices[] = {
+    {{1, -1, 1}, {1, 0}},
+    {{1, 1, 1}, {1, 1}},
+    {{-1, 1, 1}, {0, 1}},
+    {{1, 1, 1}, {1, 1}},
+    {{-1, -1, 1}, {0, 0}},
+    {{1, -1, 1}, {1, 0}}
+};
+
 @interface GLViewController ()
 
 @end
@@ -71,6 +80,9 @@
         [drawable setScale:GLKVector3Make(scale, scale, 1)];
         [_drawables addObject:drawable];
     }
+    
+    glBindBuffer(GL_ARRAY_BUFFER, _lineBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertices), QuadVertices,  GL_STATIC_DRAW);
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,7 +95,6 @@
 {
     glClear(GL_COLOR_BUFFER_BIT);
     [_drawables enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        glBindBuffer(GL_ARRAY_BUFFER, _lineBuffer);
         [(ESDrawable*)obj drawWithView:_viewMatrix];
     }];
 

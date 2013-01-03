@@ -8,15 +8,6 @@
 
 #import "ESDrawable.h"
 
-const Vertex QuadVertices[] = {
-    {{1, -1, 1}, {1, 0}},
-    {{1, 1, 1}, {1, 1}},
-    {{-1, 1, 1}, {0, 1}},
-    {{1, 1, 1}, {1, 1}},
-    {{-1, -1, 1}, {0, 0}},
-    {{1, -1, 1}, {1, 0}}
-};
-
 @implementation ESDrawable
 
 - (id) initWithShader:(GLuint)shader color:(GLKVector4)color position:(GLKVector3)position
@@ -34,9 +25,7 @@ const Vertex QuadVertices[] = {
 }
 
 - (void) drawWithView:(GLKMatrix4)viewMatrix
-{
-    glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertices), QuadVertices,  GL_DYNAMIC_DRAW);
-    
+{    
     glUseProgram(_shader);
     glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid *) offsetof(Vertex, Position));
     glVertexAttribPointer(ATTRIB_TEX01, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid *) offsetof(Vertex, TexCoord1));
