@@ -104,11 +104,11 @@
 {
     float aspect = fabsf([UIScreen mainScreen].bounds.size.width / [UIScreen mainScreen].bounds.size.height);
     _viewMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), aspect, 1.0, 100.0);
+    static float angle = 0.0;
+    angle += 1.0;
+    if (angle > 360.0) angle = 0.0;
     [_drawables enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         ESDrawable * drawable = obj;
-        static float angle = 0.0;
-        angle += 0.05;
-        if (angle > 360.0) angle = 0.0;
         [drawable setRotation:GLKVector3Make(0.0, 0.0, angle)];
         [drawable updateWithDeltaTime:self.timeSinceLastUpdate];
     }];
